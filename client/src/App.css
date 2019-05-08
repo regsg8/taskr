@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Just+Another+Hand');
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.App {
+  text-align: center;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.fa-plus-square {
+  transition: linear 100ms all;
+}
+
+.fa-plus-square:hover {
+  text-shadow: 1px 1px black;
+  color: #fea42a;
+}

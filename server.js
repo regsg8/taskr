@@ -8,16 +8,19 @@ require("dotenv").config();
 const boardRoutes = require("./routes/boardRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-
+const secret = process.env.SECRET || "Thraxa Bandit Sock Apple"
 const PORT = process.env.PORT || 5100;
+const path = require('path')
 
 //global middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 //DB connect
 mongoose.connect(
+  process.env.MONGODB_URI ||
   "mongodb://localhost:27017/taskr",
   { useNewUrlParser: true, useCreateIndex: true },
   () => console.log("connected to DB".rainbow)
@@ -41,6 +44,11 @@ app.use((err, req, res, next) => {
   }
   return res.send({ errMsg: err.message });
 });
+
+//For Heroku deployment
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+})
 
 //server listen
 app.listen(PORT, () => {
